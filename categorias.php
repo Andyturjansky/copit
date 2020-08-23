@@ -1,13 +1,16 @@
 <div class="row mt-1">       
                     <?php               
-                     ini_set("display_errors", 1); // si lo pones en 1 muestra un error, funciona bien igual
-                     ini_set("display_startup_errors", 0); //     
-                    $where= " where 1=1 ";
+                    ini_set("display_errors", 1); // si lo pones en 1 muestra un error, funciona bien igual
+                    ini_set("display_startup_errors", 0); //     
+
+                    $idCategoria = mysqli_real_escape_string($con, $_REQUEST['IdCategoria'] ?? ''); //categoria seleccionada
+
+                    $where= "where 1=1 and productos.IdCategoriaProducto = '$idCategoria'"; //Esta consulta hace que el paginaodr solo muestre los productos de la categoria seleccionada
                     $nombre= mysqli_real_escape_string($con,$_REQUEST['Nombre']??'');
                     if( empty($nombre)==false ){
                         $where="and Nombre LIKE '%".$nombre."%'";
                     }
-                    $queryCuenta="SELECT COUNT(*) as cuenta FROM productos  $where ;";
+                    $queryCuenta="SELECT COUNT(*) as cuenta FROM productos $where";
                     $resCuenta=mysqli_query($con,$queryCuenta);
                     $rowCuenta=mysqli_fetch_assoc($resCuenta);
                     $totalRegistros=$rowCuenta['cuenta'];
@@ -31,8 +34,7 @@
                     die("Error de conexion " . mysqli_connect_error());
                     }
 
-            $idCategoria = mysqli_real_escape_string($con, $_REQUEST['IdCategoria'] ?? '');
-
+            
             $queryCategoria = "SELECT 
              IdCategoria,
              NombreCat 
@@ -69,8 +71,7 @@
             INNER JOIN talles ON talles.IdTalle=productos.IdTalleProducto
             INNER JOIN diseniadores ON diseniadores.IdDiseniador=productos.IdDiseniadorProducto
             INNER JOIN colores ON colores.IdColor=productos.IdColorProducto
-            $where 
-            and productos.IdCategoriaProducto = '$idCategoria'
+            $where             
             and productos.VerificarProducto = 1
             GROUP BY IdProducto
             $limite           

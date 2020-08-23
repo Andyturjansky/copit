@@ -2,7 +2,7 @@
                     <?php               
                      ini_set("display_errors", 0); // si lo pones en 1 muestra un error, funciona bien igual
                      ini_set("display_startup_errors", 0); //     
-                    $where= " where 1 = 1 ";
+                    $where= "where 1=1 ";
                     $nombre= mysqli_real_escape_string($con,$_REQUEST['Nombre']??'');
                     if( empty($nombre)==false ){
                         $where="and Nombre LIKE '%".$nombre."%'";
