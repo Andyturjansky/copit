@@ -53,7 +53,7 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
                     </form>
                     <ul class="navbar-nav">
                         <li class="nav-item d-none d-sm-inline-block">
-                            <a href="publicarProducto.php" class="nav-link">Vender</a>
+                            <a href="index.php?modulo=publicarProducto" class="nav-link">Vender</a>
                         </li>                        
                     </ul>                    
                     <!-- Right navbar links -->
@@ -155,6 +155,9 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
                 }
                 if( $modulo=="categorias" ){
                     include_once "categorias.php";
+                }
+                if( $modulo =="publicarProducto"){
+                    include_once "publicarProducto.php";
                 }
                 ?>
             </div>
