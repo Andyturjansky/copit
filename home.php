@@ -34,18 +34,7 @@
                     
              
              
-             $queryCategoria = "SELECT 
-             IdCategoria,
-             NombreCat 
-             from categorias";   
-
-             $resCategoria = mysqli_query($con, $queryCategoria); 
-             while ($row2 = mysqli_fetch_row($resCategoria)) {
-                       
-                ?>                
-                  <a href="index.php?modulo=categorias&IdCategoria=<?php echo $row2[0] ?>"> <?php echo $row2[1]?></a>
-                 <?php //ESTO ES LO QUE MUESTRA LAS CATEGORIAS AHI TODAS FEAS
-             }
+           
                
 
             

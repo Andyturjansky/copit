@@ -55,7 +55,23 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
                         <li class="nav-item d-none d-sm-inline-block">
                             <a href="index.php?modulo=publicarProducto" class="nav-link">Vender</a>
                         </li>                        
-                    </ul>                    
+                    </ul>  
+
+                    <?php
+                    //Categorias navbar
+                    $queryCategoria = "SELECT 
+                    IdCategoria,
+                    NombreCat 
+                    from categorias";   
+
+                    $resCategoria = mysqli_query($con, $queryCategoria); 
+                    while ($row2 = mysqli_fetch_row($resCategoria)) {
+                       
+                     ?>                
+                    <a href="index.php?modulo=categorias&IdCategoria=<?php echo $row2[0] ?>"> <?php echo $row2[1]?>&nbsp;</a>
+                    <?php
+                }    
+                    ?>              
                     <!-- Right navbar links -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Messages Dropdown Menu -->
@@ -142,7 +158,8 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
                                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                             </div>
                         </li>
-                    </ul>
+                    </ul>                    
+
                 </nav>                
                 <!-- Vista -->               
                 <?php
