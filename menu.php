@@ -9,7 +9,7 @@
                     <!-- SEARCH FORM -->
                     <form class="form-inline ml-3" action="index.php">
                         <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar bg-gray" type="search" placeholder="Buscar" aria-label="Search" name="Nombre" value=<?php echo $_REQUEST['NombreCliente']??'';?> >
+                            <input class="form-control form-control-navbar bg-gray" type="search" placeholder="Buscar" aria-label="Search" name="Nombre" value=<?php echo $_REQUEST['Nombre']??'';?> >
                             <input type="hidden" name="modulo" value="home">
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
