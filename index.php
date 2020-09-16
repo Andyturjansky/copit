@@ -19,8 +19,17 @@
   <!-- estilo tarjeta -->
   <link href="home.css" rel="stylesheet" type="text/css">
   <!-- filtros -->  
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />  
+
+  <?php
+    session_start();
+    session_regenerate_id(true);
+    $accion=$_REQUEST['accion']??'';
+    if($accion=='cerrar'){
+        session_destroy();
+        header("Refresh:0");
+    }
+?>
 </head>
 
 <body>
@@ -30,139 +39,10 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
 ?>
     <div class="container">
         <div class="row">
-            <div class="col-12">
-                <!-- Navbar -->
-                <nav class="navbar navbar-expand navbar-dark">
-                    <!-- Left navbar links -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item d-none d-sm-inline-block">
-                            <a href="index.php" class="nav-link">COPIT</a>
-                        </li>                        
-                    </ul>
-                    <!-- SEARCH FORM -->
-                    <form class="form-inline ml-3" action="index.php">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar bg-gray" type="search" placeholder="Buscar" aria-label="Search" name="Nombre" value=<?php echo $_REQUEST['Nombre']??'';?> >
-                            <input type="hidden" name="modulo" value="home">
-                            <div class="input-group-append">
-                                <button class="btn btn-navbar" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <ul class="navbar-nav">
-                        <li class="nav-item d-none d-sm-inline-block">
-                            <a href="index.php?modulo=publicarProducto" class="nav-link">Vender</a>
-                        </li>                        
-                    </ul>  
-
-                    <?php
-                    //Categorias navbar
-                    $queryCategoria = "SELECT 
-                    IdCategoria,
-                    NombreCat 
-                    from categorias";   
-
-                    $resCategoria = mysqli_query($con, $queryCategoria); 
-                    while ($row2 = mysqli_fetch_row($resCategoria)) {
-                       
-                     ?>                
-                    <a href="index.php?modulo=categorias&IdCategoria=<?php echo $row2[0] ?>"> <?php echo $row2[1]?>&nbsp;</a>
-                    <?php
-                }    
-                    ?>              
-                    <!-- Right navbar links -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Messages Dropdown Menu -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="#">
-                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                <span class="badge badge-danger navbar-badge" id="badgeProducto"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                <a href="#" class="dropdown-item">
-                                    <!-- Message Start -->
-                                    <div class="media">
-                                        <img src="admin/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                                        <div class="media-body">
-                                            <h3 class="dropdown-item-title">
-                                                Brad Diesel
-                                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                            </h3>
-                                            <p class="text-sm">Call me whenever you can...</p>
-                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                        </div>
-                                    </div>
-                                    <!-- Message End -->
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <!-- Message Start -->
-                                    <div class="media">
-                                        <img src="admin/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                        <div class="media-body">
-                                            <h3 class="dropdown-item-title">
-                                                John Pierce
-                                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                            </h3>
-                                            <p class="text-sm">I got your message bro</p>
-                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                        </div>
-                                    </div>
-                                    <!-- Message End -->
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <!-- Message Start -->
-                                    <div class="media">
-                                        <img src="admin/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                                        <div class="media-body">
-                                            <h3 class="dropdown-item-title">
-                                                Nora Silvester
-                                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                                            </h3>
-                                            <p class="text-sm">The subject goes here</p>
-                                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                        </div>
-                                    </div>
-                                    <!-- Message End -->
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                            </div>
-                        </li>
-                        <!-- Notifications Dropdown Menu -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-toggle="dropdown" href="#">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                                    <span class="float-right text-muted text-sm">3 mins</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                                    <span class="float-right text-muted text-sm">12 hours</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="fas fa-file mr-2"></i> 3 new reports
-                                    <span class="float-right text-muted text-sm">2 days</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                            </div>
-                        </li>
-                    </ul>                    
-
-                </nav>                
+            <div class="col-12">           
                 <!-- Vista -->               
                 <?php
+                include_once "menu.php";
                 $modulo=$_REQUEST['modulo']??'';
                 if($modulo=="home" || $modulo=="" ){
                     include_once "home.php";
@@ -199,10 +79,7 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="admin/dist/js/pages/dashboard.js"></script> 
         <script src="admin/js/ecommerce.js"></script> 
-        <!-- Filtros -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
-        <script src="js/search.js"></script>      
+        
+        <!-- Filtros -->        
 </body>
 </html>

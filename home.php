@@ -7,7 +7,7 @@
                     if( empty($nombre)==false ){
                         $where="and Nombre LIKE '%".$nombre."%'";
                     }
-                    $queryCuenta="SELECT COUNT(*) as cuenta FROM productos $where";
+                    $queryCuenta="SELECT COUNT(*) as cuenta FROM productos $where ";
                     $resCuenta=mysqli_query($con,$queryCuenta);
                     $rowCuenta=mysqli_fetch_assoc($resCuenta);
                     $totalRegistros=$rowCuenta['cuenta'];
@@ -32,14 +32,6 @@
                     }
 
                     
-             
-             
-           
-               
-
-            
-                        
-
             $query = "SELECT 
             IdProducto,
             Nombre,

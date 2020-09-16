@@ -76,20 +76,22 @@
                     <th>Diseñador</th>
                     <th>Color</th>
                     <th>Descripcion</th>
-                    <th>Precio</th>                     
-                    <th>Foto</th>
+                    <th>Precio</th> 
+                    <th>Email vendedor</th>                    
+                    <th>Foto</th>                         
                     <th>Verificar</th>
                     <th>Acciones</th>                     
                   </tr>
                      </thead>
                               <tbody>
                                   <?php                                   
-                                    $query = "SELECT IdProducto,Nombre,IdCategoriaProducto,IdCondicionProducto,IdTalleProducto,IdDiseniadorProducto,IdColorProducto,DescripcionProducto,ImagenProducto,VerificarProducto,Precio,NombreCat,NombreCondicion,NombreTalle,NombreDiseniador,NombreColor FROM productos
+                                    $query = "SELECT IdProducto,Nombre,IdCategoriaProducto,IdCondicionProducto,IdTalleProducto,IdDiseniadorProducto,IdColorProducto,DescripcionProducto,ImagenProducto,VerificarProducto,IdDetalleCliente,Precio,NombreCat,NombreCondicion,NombreTalle,NombreDiseniador,NombreColor,Email FROM productos
                                     INNER JOIN categorias ON categorias.IdCategoria=productos.IdCategoriaProducto
                                     INNER JOIN condicion ON condicion.IdCondicion=productos.IdCondicionProducto
                                     INNER JOIN talles ON talles.IdTalle=productos.IdTalleProducto
                                     INNER JOIN diseniadores ON diseniadores.IdDiseniador=productos.IdDiseniadorProducto
-                                    INNER JOIN colores ON colores.IdColor=productos.IdColorProducto where productos.IdProducto"; 
+                                    INNER JOIN colores ON colores.IdColor=productos.IdColorProducto
+                                    INNER JOIN clientes ON clientes.IdCliente=productos.IdDetalleCliente where productos.IdProducto"; 
                                     
                                     $res = mysqli_query($con, $query);   
                                     //var_dump($res);                                 
@@ -105,6 +107,7 @@
                                           <td><?php echo $row['NombreColor'] ?></td>
                                           <td><?php echo $row['DescripcionProducto'] ?></td>
                                           <td><?php echo $row['Precio'] ?></td>   
+                                          <td><?php echo $row['Email'] ?></td>   
                                           <td> 
                                             <?php if(empty($row['ImagenProducto'])==true): ?>
                                               <?php else: ?>

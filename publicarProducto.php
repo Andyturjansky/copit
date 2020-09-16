@@ -1,8 +1,6 @@
 
 
-<?php
-    include_once "admin/dbCopIt.php";
-    $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
+<?php   
 
     if ($con == false) {
         echo "Error conexion" . mysqli_error($con);
@@ -24,11 +22,12 @@
     $diseniador = mysqli_real_escape_string($con, $_REQUEST['IdDiseniadorProducto'] ?? '');
     $color = mysqli_real_escape_string($con, $_REQUEST['IdColorProducto'] ?? '');
     $descripcion = mysqli_real_escape_string($con, $_REQUEST['DescripcionProducto'] ?? '');
-    $precio = mysqli_real_escape_string($con, $_REQUEST['Precio'] ?? '');   
+    $precio = mysqli_real_escape_string($con, $_REQUEST['Precio'] ?? '');
+    $id = $_SESSION['IdCliente'];              
 
     $query = "INSERT INTO productos 
-        (Nombre       ,IdCategoriaProducto       ,IdCondicionProducto,     IdTalleProducto,       IdDiseniadorProducto,      IdColorProducto,      DescripcionProducto,       Precio,        ImagenProducto) VALUES
-        ('" . $nombre . "','" . $categoria . "','" . $condicion . "','" . $talle . "','" . $diseniador . "','" . $color . "','" . $descripcion . "','" . $precio . "','" . $nombreFoto . "');
+        (Nombre       ,IdCategoriaProducto       ,IdCondicionProducto,     IdTalleProducto,       IdDiseniadorProducto,      IdColorProducto,      DescripcionProducto,       Precio,        ImagenProducto,        IdDetalleCliente) VALUES
+        ('" . $nombre . "','" . $categoria . "','" . $condicion . "','" . $talle . "','" . $diseniador . "','" . $color . "','" . $descripcion . "','" . $precio . "','" . $nombreFoto . "','" . $id . "');
         ";   
      
     $res = mysqli_query($con,$query);    
@@ -38,7 +37,7 @@
     } else {
 ?>
         <div class="alert alert-danger" role="alert">
-            Error al publicar producto <?php //echo mysqli_error($con); ?>
+            Error al publicar producto <?php echo mysqli_error($con); ?>
         </div>
 <?php
     }
@@ -73,17 +72,16 @@
       </div><!-- /.container-fluid -->
     </section>
 
-    <?php
+<?php
 $queryCategoria = $con -> query ("SELECT IdCategoria,NombreCat FROM categorias");
 $queryCondicion = $con -> query ("SELECT IdCondicion,NombreCondicion FROM condicion");
 $queryTalle = $con -> query ("SELECT IdTalle,NombreTalle FROM talles");
 $queryDiseniador = $con -> query ("SELECT IdDiseniador,NombreDiseniador FROM diseniadores");
 $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
-
 ?>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content">  
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
