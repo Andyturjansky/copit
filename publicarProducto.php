@@ -6,13 +6,13 @@
         echo "Error conexion" . mysqli_error($con);
     }
 
-        if (isset($_REQUEST['Guardar'])) {    
+    if (isset($_REQUEST['Guardar'])) { 
 
-    
-    $subirFoto=isset($_FILES['ImagenProducto'])?$_FILES['ImagenProducto']:null;
-    if($subirFoto){
-    $nombreFoto=$subirFoto['name'];
-    move_uploaded_file($subirFoto['tmp_name'],'fotos/'.$nombreFoto);
+        $subirFoto=isset($_FILES['ImagenProducto'])?$_FILES['ImagenProducto']:null;
+
+        if($subirFoto){
+        $nombreFoto=$subirFoto['name'];
+        move_uploaded_file($subirFoto['tmp_name'],'fotos/'.$nombreFoto);
     }
 
     $nombre = mysqli_real_escape_string($con, $_REQUEST['Nombre'] ?? '');
@@ -33,7 +33,7 @@
     $res = mysqli_query($con,$query);    
 
     if ($res) {
-        echo '<meta http-equiv="refresh" content="0; url=index.php?modulo=publicarProducto&mensaje=Producto publicado exitosamente"/>  ';        
+        echo '<meta http-equiv="refresh" content="0; url=index.php?modulo=publicarProducto&mensajePublicacionExitosa=Producto publicado exitosamente"/>  ';        
     } else {
 ?>
         <div class="alert alert-danger" role="alert">
@@ -45,14 +45,14 @@
 ?>
 
 <?php
-  if(isset($_REQUEST['mensaje'])){
+  if(isset($_REQUEST['mensajePublicacionExitosa'])){
     ?>
     <div class="alert alert-primary alert-dismissible fade show float-medium" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
       </button>
-      <?php echo $_REQUEST['mensaje'] ?>
+      <?php echo $_REQUEST['mensajePublicacionExitosa'] ?>
     </div>
     <?php
     }
