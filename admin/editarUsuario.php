@@ -23,7 +23,7 @@ if (isset($_REQUEST['Guardar'])) {
 <?php
     }
 }
-$id= mysqli_real_escape_string($con,$_REQUEST['IdUsuario']??'');
+$id = mysqli_real_escape_string($con, $_REQUEST['IdUsuario'] ??'');
 $query="SELECT IdUsuario,Email,Password,Nombre from usuarios where IdUsuario='".$id."'; ";
 $res=mysqli_query($con,$query);
 $row=mysqli_fetch_assoc($res);
@@ -52,7 +52,7 @@ $row=mysqli_fetch_assoc($res);
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="email" name="Email" class="form-control" value="<?php echo $row['Email'] ?>" required="required" >
-                            </div>
+                            </div>  
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="password" name="Password" class="form-control"  required="required" >

@@ -1,10 +1,4 @@
-
-
-<?php   
-
-    if ($con == false) {
-        echo "Error conexion" . mysqli_error($con);
-    }
+<?php
 
     if (isset($_REQUEST['Guardar'])) { 
 
@@ -23,50 +17,54 @@
     $color = mysqli_real_escape_string($con, $_REQUEST['IdColorProducto'] ?? '');
     $descripcion = mysqli_real_escape_string($con, $_REQUEST['DescripcionProducto'] ?? '');
     $precio = mysqli_real_escape_string($con, $_REQUEST['Precio'] ?? '');
-    $id = $_SESSION['IdCliente'];              
+    $idProducto = mysqli_real_escape_string($con, $_REQUEST['IdProducto'] ?? '');
 
-    $query = "INSERT INTO productos 
-        (Nombre       ,IdCategoriaProducto       ,IdCondicionProducto,     IdTalleProducto,       IdDiseniadorProducto,      IdColorProducto,      DescripcionProducto,       Precio,        ImagenProducto,        IdDetalleCliente) VALUES
-        ('" . $nombre . "','" . $categoria . "','" . $condicion . "','" . $talle . "','" . $diseniador . "','" . $color . "','" . $descripcion . "','" . $precio . "','" . $nombreFoto . "','" . $id . "');
-        ";   
-     
-    $res = mysqli_query($con,$query);    
-
+    $query = "UPDATE productos SET
+        Nombre='" . $nombre . "',
+        IdCategoriaProducto='" . $categoria . "',
+        IdCondicionProducto='" . $condicion . "',
+        IdTalleProducto='" . $talle . "',
+        IdDiseniadorProducto='" . $diseniador . "',
+        IdColorProducto='" . $color . "',
+        DescripcionProducto='" . $descripcion . "',
+        Precio='" . $precio . "',
+        ImagenProducto='" . $nombreFoto . "'    
+        where IdProducto='".$idProducto."';
+        ";
+    $res = mysqli_query($con, $query);
     if ($res) {
-        echo '<meta http-equiv="refresh" content="0; url=index.php?modulo=publicarProducto&mensajePublicacionExitosa=Producto publicado exitosamente"/>  ';        
+        echo '<meta http-equiv="refresh" content="0; url=index.php?modulo=productos&mensaje=Tu articulo '.$nombre.' ha sido editado de manera exitosa" />  ';
     } else {
 ?>
         <div class="alert alert-danger" role="alert">
-            Error al publicar producto <?php echo mysqli_error($con); ?>
+            Error al editar producto <?php echo mysqli_error($con); ?>
         </div>
 <?php
     }
 }
+$idProducto = mysqli_real_escape_string($con,$_REQUEST['IdProducto']??'');
+$query="SELECT IdProducto,
+Nombre,
+IdCategoriaProducto,
+IdCondicionProducto,
+IdTalleProducto,
+IdDiseniadorProducto,
+IdColorProducto,
+DescripcionProducto,
+Precio,
+ImagenProducto
+from productos
+where IdProducto ='".$idProducto."'; ";
+$res=mysqli_query($con,$query);
+$row=mysqli_fetch_assoc($res);
 ?>
-
-<?php
-  if(isset($_REQUEST['mensajePublicacionExitosa'])){
-    ?>
-    <div class="alert alert-primary alert-dismissible fade show float-medium" role="alert">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        <span class="sr-only">Close</span>
-      </button>
-      <?php echo $_REQUEST['mensajePublicacionExitosa'] ?>
-    </div>
-    <?php
-    }
-    ?>
-
-<!-- Content Wrapper. Contains page content -->
-
 <div class="container">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Publicar Producto</h1>
+            <h1>Editar Producto</h1>
           </div> 
         </div>
       </div><!-- /.container-fluid -->
@@ -79,7 +77,6 @@ $queryTalle = $con -> query ("SELECT IdTalle,NombreTalle FROM talles");
 $queryDiseniador = $con -> query ("SELECT IdDiseniador,NombreDiseniador FROM diseniadores");
 $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
 ?>
-
     <!-- Main content -->
     <section class="content">  
       <div class="container-fluid">
@@ -88,10 +85,10 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
             <div class="card">              
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="index.php?modulo=publicarProducto" method="post" enctype="multipart/form-data">                            
+              <form action="index.php?modulo=editarProducto" method="post" enctype="multipart/form-data">                            
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" name="Nombre" class="form-control"  required="required" >
+                                <input type="text" name="Nombre" class="form-control" value="<?php echo $row['Nombre'] ?>"  required="required" >
                             </div>         
                             <div class="form-group">
                                 <label>Categoria</label>              
@@ -160,17 +157,18 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
                             </div>                                
                             <div class="form-group">
                                 <label>Descripcion</label>
-                                <input type="text" name="DescripcionProducto" class="form-control" required="required" >
+                                <input type="text" name="DescripcionProducto" class="form-control" value="<?php echo $row['DescripcionProducto'] ?>" required="required" >
                             </div> 
                             <div class="form-group">
                                 <label>Precio</label>
-                                <input type="number" name="Precio" class="form-control" required="required" >
+                                <input type="number" name="Precio" class="form-control" value="<?php echo $row['Precio'] ?>" required="required" >
                             </div>    
                             </div? class="form-group">  
                             <label>Foto</label>
-                                <input type="file" name="ImagenProducto" class="form-control"  required="required" >                    
+                                <input type="file" name="ImagenProducto" class="form-control" value="<?php echo $row['ImagenProducto'] ?>" required="required" >                    
                             </div>                                         
                             <div class="form-group">
+                                <input type="hidden" name="IdProducto" value="<?php echo $row['IdProducto'] ?>" >
                                 <button type="submit" style="margin-left: 25px" class="btn btn-primary" name="Guardar">Guardar</button>
                                 <a href="index.php" class="btn btn-warning">Cancelar</a>
                             </div>
@@ -188,8 +186,4 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
           <!-- /.row -->
       </section>
       <!-- /.content -->
-  </div>           
-            
-   
-
-
+  </div>  

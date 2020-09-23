@@ -56,6 +56,12 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
                 if( $modulo =="publicarProducto"){
                     include_once "publicarProducto.php";
                 }
+                if( $modulo =="productos"){
+                    include_once "productos.php";
+                }
+                if($modulo=="editarProducto"){
+                    include_once "editarProducto.php";
+                }
                 ?>
             </div>
         </div>
@@ -80,6 +86,19 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
         <script src="admin/dist/js/pages/dashboard.js"></script> 
         <script src="admin/js/ecommerce.js"></script> 
         
-        <!-- Filtros -->        
+        <!-- Borrar producto -->    
+        <script>
+        $(document).ready(function () {
+            $(".BorrarProducto").click(function (e) { 
+            e.preventDefault();
+            var res=confirm("¿Estas seguro de que quieres borrar este producto?");
+            if(res==true){
+                var Link=$(this).attr("href");
+                window.location=Link;
+            }
+
+            });
+        });
+        </script>
 </body>
 </html>

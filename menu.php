@@ -10,7 +10,7 @@
                     <form class="form-inline ml-3" action="index.php">
                         <div class="input-group input-group-sm">
                             <input class="form-control form-control-navbar bg-gray" type="search" placeholder="Buscar" aria-label="Search" name="Nombre" value=<?php echo $_REQUEST['Nombre']??'';?> >
-                            <input type="hidden" name="modulo" value="home">
+                            <!-- <input type="hidden" name="modulo" value="home">-->
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
                                     <i class="fas fa-search"></i>
@@ -142,6 +142,9 @@
                                 ?>
                                     <a href="index.php?modulo=usuario" class="dropdown-item">
                                         <i class="fas fa-user text-primary mr-2"></i>Hola <?php echo $_SESSION['NombreDelCliente']; ?>
+                                    </a>
+                                    <a href="index.php?modulo=productos" class="dropdown-item">
+                                        <i class="fa fa-shopping-bag nav-icon"></i> Mis productos</i>
                                     </a>
                                     <form action="index.php" method="post">
                                         <button name="accion" class="btn btn-danger dropdown-item" type="submit" value="cerrar">
