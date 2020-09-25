@@ -1,18 +1,20 @@
 
 
-<?php   
+<?php
+    include_once "admin/dbCopIt.php";
+    $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
 
     if ($con == false) {
         echo "Error conexion" . mysqli_error($con);
     }
 
-    if (isset($_REQUEST['Guardar'])) { 
+        if (isset($_REQUEST['Guardar'])) {    
 
-        $subirFoto=isset($_FILES['ImagenProducto'])?$_FILES['ImagenProducto']:null;
-
-        if($subirFoto){
-        $nombreFoto=$subirFoto['name'];
-        move_uploaded_file($subirFoto['tmp_name'],'fotos/'.$nombreFoto);
+    
+    $subirFoto=isset($_FILES['ImagenProducto'])?$_FILES['ImagenProducto']:null;
+    if($subirFoto){
+    $nombreFoto=$subirFoto['name'];
+    move_uploaded_file($subirFoto['tmp_name'],'fotos/'.$nombreFoto);
     }
 
     $nombre = mysqli_real_escape_string($con, $_REQUEST['Nombre'] ?? '');
@@ -22,22 +24,21 @@
     $diseniador = mysqli_real_escape_string($con, $_REQUEST['IdDiseniadorProducto'] ?? '');
     $color = mysqli_real_escape_string($con, $_REQUEST['IdColorProducto'] ?? '');
     $descripcion = mysqli_real_escape_string($con, $_REQUEST['DescripcionProducto'] ?? '');
-    $precio = mysqli_real_escape_string($con, $_REQUEST['Precio'] ?? '');
-    $id = $_SESSION['IdCliente'];              
+    $precio = mysqli_real_escape_string($con, $_REQUEST['Precio'] ?? '');   
 
     $query = "INSERT INTO productos 
-        (Nombre       ,IdCategoriaProducto       ,IdCondicionProducto,     IdTalleProducto,       IdDiseniadorProducto,      IdColorProducto,      DescripcionProducto,       Precio,        ImagenProducto,        IdDetalleCliente) VALUES
-        ('" . $nombre . "','" . $categoria . "','" . $condicion . "','" . $talle . "','" . $diseniador . "','" . $color . "','" . $descripcion . "','" . $precio . "','" . $nombreFoto . "','" . $id . "');
+        (Nombre       ,IdCategoriaProducto       ,IdCondicionProducto,     IdTalleProducto,       IdDiseniadorProducto,      IdColorProducto,      DescripcionProducto,       Precio,        ImagenProducto) VALUES
+        ('" . $nombre . "','" . $categoria . "','" . $condicion . "','" . $talle . "','" . $diseniador . "','" . $color . "','" . $descripcion . "','" . $precio . "','" . $nombreFoto . "');
         ";   
      
     $res = mysqli_query($con,$query);    
 
     if ($res) {
-        echo '<meta http-equiv="refresh" content="0; url=index.php?modulo=publicarProducto&mensajePublicacionExitosa=Producto publicado exitosamente"/>  ';        
+        echo '<meta http-equiv="refresh" content="0; url=index.php?modulo=publicarProducto&mensaje=Producto publicado exitosamente"/>  ';        
     } else {
 ?>
         <div class="alert alert-danger" role="alert">
-            Error al publicar producto <?php echo mysqli_error($con); ?>
+            Error al publicar producto <?php //echo mysqli_error($con); ?>
         </div>
 <?php
     }
@@ -45,14 +46,14 @@
 ?>
 
 <?php
-  if(isset($_REQUEST['mensajePublicacionExitosa'])){
+  if(isset($_REQUEST['mensaje'])){
     ?>
     <div class="alert alert-primary alert-dismissible fade show float-medium" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
       </button>
-      <?php echo $_REQUEST['mensajePublicacionExitosa'] ?>
+      <?php echo $_REQUEST['mensaje'] ?>
     </div>
     <?php
     }
@@ -72,16 +73,17 @@
       </div><!-- /.container-fluid -->
     </section>
 
-<?php
+    <?php
 $queryCategoria = $con -> query ("SELECT IdCategoria,NombreCat FROM categorias");
 $queryCondicion = $con -> query ("SELECT IdCondicion,NombreCondicion FROM condicion");
 $queryTalle = $con -> query ("SELECT IdTalle,NombreTalle FROM talles");
 $queryDiseniador = $con -> query ("SELECT IdDiseniador,NombreDiseniador FROM diseniadores");
 $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
+
 ?>
 
     <!-- Main content -->
-    <section class="content">  
+    <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -190,6 +192,13 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
       <!-- /.content -->
   </div>           
             
-   
+          
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 

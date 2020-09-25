@@ -1,13 +1,13 @@
-<div class="row mt-1">       
+
                     <?php               
                      ini_set("display_errors", 0); // si lo pones en 1 muestra un error, funciona bien igual
                      ini_set("display_startup_errors", 0); //     
                     $where= "where 1=1 ";
                     $nombre= mysqli_real_escape_string($con,$_REQUEST['Nombre']??'');
                     if( empty($nombre)==false ){
-                        $where="where 1=1 and Nombre LIKE '%".$nombre."%'";
+                        $where="and Nombre LIKE '%".$nombre."%'";
                     }
-                    $queryCuenta="SELECT COUNT(*) as cuenta FROM productos $where ";
+                    /*$queryCuenta="SELECT COUNT(*) as cuenta FROM productos $where";
                     $resCuenta=mysqli_query($con,$queryCuenta);
                     $rowCuenta=mysqli_fetch_assoc($resCuenta);
                     $totalRegistros=$rowCuenta['cuenta'];
@@ -24,7 +24,7 @@
                     }else{
                         $inicioLimite=($paginaSel-1)* $elementosPorPagina;
                     }
-                    $limite=" limit $inicioLimite,$elementosPorPagina ";
+                    $limite=" limit $inicioLimite,$elementosPorPagina ";*/
 
 
                     if ($con != true) {
@@ -32,7 +32,15 @@
                     }
 
                     
-            $query = "SELECT 
+             
+             
+           
+               
+
+            
+                        
+
+            $query = "SELECT
             IdProducto,
             Nombre,
             IdCategoriaProducto,
@@ -55,77 +63,50 @@
             INNER JOIN talles ON talles.IdTalle=productos.IdTalleProducto
             INNER JOIN diseniadores ON diseniadores.IdDiseniador=productos.IdDiseniadorProducto
             INNER JOIN colores ON colores.IdColor=productos.IdColorProducto
+            
             $where 
             and productos.VerificarProducto = 1
             GROUP BY IdProducto
-            $limite           
-            "; 
+            LIMIT 6
+            ";
             $res = mysqli_query($con, $query); 
                        
             while ($row = mysqli_fetch_row($res)) {
                 ?>                             
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="container mt-3">
-                    <div class="card">
-                        <img src="fotos/<?php echo $row[8]; ?>" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <label class="card-title"><?php echo $row[1];?></label>
-                            <h5 class="card-text">
-                                Diseñador: <?php echo $row[13]; ?>
-                            </h5>
-                            <h5 class="card-text">
-                                Precio: <?php echo $row[9]; ?>
-                            </h5>
-                            <a href="index.php?modulo=detalleProducto&IdProducto=<?php echo $row[0] ?>" class="btn btn-primary">Acceder a la publicacion</a>
+                
+                
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="grid-item__content-wrapper">  
+                  <div class="ps-shoe mb-30">
+                  <div class="ps-shoe__thumbnail"><a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a><img src="fotos/<?php echo $row[8]; ?>" alt=""><a class="ps-shoe__overlay" href="product-detail.php?modulo=detalleProducto&IdProducto=<?php echo $row[0] ?>"></a>
+                      </div>
+                      <div class="ps-shoe__content">
+                        <div class="ps-shoe__variants">
+                          <!--<div class="ps-shoe__variant normal"><img src="images/shoe/2.jpg" alt=""><img src="images/shoe/3.jpg" alt=""><img src="images/shoe/4.jpg" alt=""><img src="images/shoe/5.jpg" alt=""></div>
+                          <select class="ps-rating ps-shoe__rating">
+                            <option value="1">1</option>
+                            <option value="1">2</option>
+                            <option value="1">3</option>
+                            <option value="1">4</option>
+                            <option value="2">5</option>
+                          </select>-->
                         </div>
+                        <div class="ps-shoe__detail"><label class="ps-shoe__name" href="#"><?php echo $row[1];?></label>
+                          <p class="ps-shoe__categories"><a href="#"><?php echo $row[10]; ?></a>, <a href="#"><?php echo $row[13]; ?></a> </p><span class="ps-shoe__price">$<?php echo $row[9]; ?></span>
+                        </div>
+                      </div>
                     </div>
-                    </div>
-                </div>            
+                  </div>
+                </div>
+            
+ 
+
+            
+                
+                
+
             <?php
             }
             ?>           
-                </div>
-                <?php
-                if($totalPaginas>0){
-                ?>
-                    <nav aria-label="Page navigation">
-                      <ul class="pagination">
-                        <?php
-                            if( $paginaSel!=1 ){
-                        ?>
-                        <li class="page-item">
-                          <a class="page-link" href="index.php?modulo=home&pagina=<?php echo ($paginaSel-1); ?>" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                            <span class="sr-only">Previous</span>
-                          </a>
-                        </li>
-                        <?php
-                        }
-                        ?>
-
-                        <?php
-                        for($i=1;$i<=$totalPaginas;$i++){
-                        ?>
-                        <li class="page-item <?php echo ($paginaSel==$i)?" active ":" "; ?>">
-                            <a class="page-link" href="index.php?modulo=home&pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
-                        </li>
-                        <?php
-                        }
-                        ?>
-                        <?php
-                            if( $paginaSel!=$totalPaginas ){
-                        ?>
-                        <li class="page-item">
-                          <a class="page-link" href="index.php?modulo=home&pagina=<?php echo ($paginaSel+1); ?>" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                            <span class="sr-only">Next</span>
-                          </a>
-                        </li>
-                        <?php
-                            }
-                        ?>
-                      </ul>
-                    </nav>
-            <?php
-            }
-            ?>
+</div>
+</div>              

@@ -1,6 +1,6 @@
 <div class="row mt-1">       
                     <?php               
-                    ini_set("display_errors", 0); // si lo pones en 1 muestra un error, funciona bien igual
+                    ini_set("display_errors", 1); // si lo pones en 1 muestra un error, funciona bien igual
                     ini_set("display_startup_errors", 0); //     
 
                     $idCategoria = mysqli_real_escape_string($con, $_REQUEST['IdCategoria'] ?? ''); //categoria seleccionada
@@ -10,6 +10,7 @@
                     if( empty($nombre)==false ){
                         $where="and Nombre LIKE '%".$nombre."%'";
                     }
+                    
                     $queryCuenta="SELECT COUNT(*) as cuenta FROM productos $where";
                     $resCuenta=mysqli_query($con,$queryCuenta);
                     $rowCuenta=mysqli_fetch_assoc($resCuenta);
@@ -33,6 +34,8 @@
                     if ($con != true) {
                     die("Error de conexion " . mysqli_connect_error());
                     }
+
+            
             
 
             $query = "SELECT 
