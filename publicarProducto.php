@@ -166,9 +166,9 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
                                 <label>Precio</label>
                                 <input type="number" name="Precio" class="form-control" required="required" >
                             </div>    
-                            </div? class="form-group">  
+                            <div class="form-group">  
                             <label>Foto</label>
-                                <input type="file" name="ImagenProducto" class="form-control"  required="required" >                    
+                                <input type="file" name="ImagenProducto" accept="image/jpg, image/jpeg, image/png, image/webp, image/JPG, image/JPEG, image/PNG, image/WEBP" class="form-control"  required="required" >                    
                             </div>                                         
                             <div class="form-group">
                                 <button type="submit" style="margin-left: 25px" class="btn btn-primary" name="Guardar">Guardar</button>

@@ -92,65 +92,60 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
                             </div>         
                             <div class="form-group">
                                 <label>Categoria</label>              
-                                <select name="IdCategoriaProducto" class="form-control" required="required">
-                                    <option value="">Seleccione una categoria</option>        
+                                <select name="IdCategoriaProducto" class="form-control" required="required">                                           
                                 <?php
                                 // Realizamos la consulta para extraer los datos                                
                                 while ($valores = mysqli_fetch_array($queryCategoria)) {
                                 // En esta sección estamos llenando el select con datos extraidos de una base de datos.
-                                    echo '<option value="'.$valores[IdCategoria].'">'.$valores[NombreCat].'</option>';
+                                ?> <option value="<?php echo $valores['IdCategoria']; ?>"<?php if($valores['IdCategoria']==$row['IdCategoriaProducto']) echo 'selected="selected"'; ?>><?php echo $valores['NombreCat']; ?></option><?php                                    
                                 }
                                 ?>
                                 </select>          
                             </div>                   
                             <div class="form-group">
                                 <label>Condicion</label>              
-                                <select name="IdCondicionProducto" class="form-control" required="required">
-                                    <option value="">Seleccione una condicion</option>        
+                                <select name="IdCondicionProducto" class="form-control" required="required">                                           
                                 <?php
                                 // Realizamos la consulta para extraer los datos                                
                                 while ($valores = mysqli_fetch_array($queryCondicion)) {
                                 // En esta sección estamos llenando el select con datos extraidos de una base de datos.
-                                    echo '<option value="'.$valores[IdCondicion].'">'.$valores[NombreCondicion].'</option>';
+                                ?> <option value="<?php echo $valores['IdCondicion']; ?>"<?php if($valores['IdCondicion']==$row['IdCondicionProducto']) echo 'selected="selected"'; ?>><?php echo $valores['NombreCondicion']; ?></option><?php
                                 }
                                 ?>
                                 </select>          
                             </div>
                             <div class="form-group">
                                 <label>Talle</label>              
-                                <select name="IdTalleProducto" class="form-control" required="required">
-                                    <option value="">Seleccione una talle</option>        
+                                <select name="IdTalleProducto" class="form-control" required="required">                                      
                                 <?php
                                 // Realizamos la consulta para extraer los datos                                
                                 while ($valores = mysqli_fetch_array($queryTalle)) {
                                 // En esta sección estamos llenando el select con datos extraidos de una base de datos.
-                                    echo '<option value="'.$valores[IdTalle].'">'.$valores[NombreTalle].'</option>';
+                                ?> <option value="<?php echo $valores['IdTalle']; ?>"<?php if($valores['IdTalle']==$row['IdTalleProducto']) echo 'selected="selected"'; ?>><?php echo $valores['NombreTalle']; ?></option><?php
                                 }
                                 ?>
                                 </select>          
                             </div>
                             <div class="form-group">
                                 <label>Diseñador</label>              
-                                <select name="IdDiseniadorProducto" class="form-control" required="required">
-                                    <option value="">Seleccione un Diseñador</option>        
+                                <select name="IdDiseniadorProducto" class="form-control" required="required">                                            
                                 <?php
                                 // Realizamos la consulta para extraer los datos                                
                                 while ($valores = mysqli_fetch_array($queryDiseniador)) {
                                 // En esta sección estamos llenando el select con datos extraidos de una base de datos.
-                                    echo '<option value="'.$valores[IdDiseniador].'">'.$valores[NombreDiseniador].'</option>';
+                                ?> <option value="<?php echo $valores['IdDiseniador']; ?>"<?php if($valores['IdDiseniador']==$row['IdDiseniadorProducto']) echo 'selected="selected"'; ?>><?php echo $valores['NombreDiseniador']; ?></option><?php
                                 }
                                 ?>
                                 </select>          
                             </div>
                             <div class="form-group">
                                 <label>Color</label>              
-                                <select name="IdColorProducto" class="form-control" required="required">
-                                    <option value="">Seleccione un color</option>        
+                                <select name="IdColorProducto" class="form-control" required="required">                                    
                                 <?php
                                 // Realizamos la consulta para extraer los datos                                
                                 while ($valores = mysqli_fetch_array($queryColor)) {
                                 // En esta sección estamos llenando el select con datos extraidos de una base de datos.
-                                    echo '<option value="'.$valores[IdColor].'">'.$valores[NombreColor].'</option>';
+                                ?> <option value="<?php echo $valores['IdColor']; ?>"<?php if($valores['IdColor']==$row['IdColorProducto']) echo 'selected="selected"'; ?>><?php echo $valores['NombreColor']; ?></option><?php
                                 }
                                 ?>
                                 </select>          
@@ -163,14 +158,16 @@ $queryColor = $con -> query ("SELECT IdColor,NombreColor FROM colores");
                                 <label>Precio</label>
                                 <input type="number" name="Precio" class="form-control" value="<?php echo $row['Precio'] ?>" required="required" >
                             </div>    
-                            </div? class="form-group">  
+                            <div class="form-group">  
                             <label>Foto</label>
-                                <input type="file" name="ImagenProducto" class="form-control" value="<?php echo $row['ImagenProducto'] ?>" required="required" >                    
+                                <input type="file" name="ImagenProducto" accept="image/jpg, image/jpeg, image/png, image/webp, image/JPG, image/JPEG, image/PNG, image/WEBP" class="form-control">
+                                </br>
+                                <img src="fotos/<?php echo $row['ImagenProducto']; ?>" style="width: 250px;" class="img-thumbnail">                    
                             </div>                                         
                             <div class="form-group">
                                 <input type="hidden" name="IdProducto" value="<?php echo $row['IdProducto'] ?>" >
-                                <button type="submit" style="margin-left: 25px" class="btn btn-primary" name="Guardar">Guardar</button>
-                                <a href="index.php" class="btn btn-warning">Cancelar</a>
+                                <button type="submit" style="margin-left: 25px" class="btn btn-primary" name="Guardar">Actualizar</button>
+                                <a href="index.php?modulo=productos" class="btn btn-warning">Cancelar</a>
                             </div>
                  </form> 
                 

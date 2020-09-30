@@ -40,11 +40,8 @@
                             <a href="index.php?modulo=publicarProducto" class="nav-link">Vender</a>
                             <?php
                             }
-                            ?>
-                            
-                        
-
-                    <?php
+                            ?>                           
+                            <?php
                     //Categorias navbar
                     $queryCategoria = "SELECT 
                     IdCategoria,

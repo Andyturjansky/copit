@@ -62,6 +62,12 @@ $con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
                 if($modulo=="editarProducto"){
                     include_once "editarProducto.php";
                 }
+                if($modulo=="checkout"){
+                    include_once "checkout.php";
+                }
+                if($modulo=="compraRealizada"){
+                    include_once "compraRealizada.php";
+                }
                 ?>
             </div>
         </div>

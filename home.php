@@ -56,6 +56,7 @@
             INNER JOIN diseniadores ON diseniadores.IdDiseniador=productos.IdDiseniadorProducto
             INNER JOIN colores ON colores.IdColor=productos.IdColorProducto
             $where 
+            and productos.Cantidad = 1
             and productos.VerificarProducto = 1
             GROUP BY IdProducto
             $limite           

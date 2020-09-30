@@ -57,7 +57,7 @@
                                   <?php   
                                     $id = $_SESSION['IdCliente']; 
                                   
-                                    $query = "SELECT IdProducto,Nombre,IdCategoriaProducto,IdCondicionProducto,IdTalleProducto,IdDiseniadorProducto,IdColorProducto,DescripcionProducto,ImagenProducto,VerificarProducto,IdDetalleCliente,Precio,NombreCat,NombreCondicion,NombreTalle,NombreDiseniador,NombreColor,Email FROM productos
+                                    $query = "SELECT IdProducto,Nombre,IdCategoriaProducto,IdCondicionProducto,IdTalleProducto,IdDiseniadorProducto,IdColorProducto,DescripcionProducto,ImagenProducto,VerificarProducto,IdDetalleCliente,Precio,NombreCat,NombreCondicion,NombreTalle,NombreDiseniador,NombreColor,Email, Cantidad FROM productos
                                     INNER JOIN categorias ON categorias.IdCategoria=productos.IdCategoriaProducto
                                     INNER JOIN condicion ON condicion.IdCondicion=productos.IdCondicionProducto
                                     INNER JOIN talles ON talles.IdTalle=productos.IdTalleProducto
@@ -65,7 +65,7 @@
                                     INNER JOIN colores ON colores.IdColor=productos.IdColorProducto
                                     INNER JOIN clientes ON clientes.IdCliente=productos.IdDetalleCliente
                                     where productos.IdProducto
-                                    AND IdCliente = '" . $id . "' ";
+                                    AND IdCliente = '$id ' ";
                                     $res = mysqli_query($con, $query);                                    
 
                                     while ($row = mysqli_fetch_assoc($res)) {
@@ -86,16 +86,24 @@
                                               <?php endif; ?>                                          
                                           </td>  
                                           <td><?php
-                                          if($row['VerificarProducto'] == 1){
-                                           echo "Verificado";
-                                          }else if ($row['VerificarProducto'] == 0){
-                                            echo "Esperando verifiacion";
+                                          if($row['VerificarProducto'] == 1 && $row['Cantidad'] == 0){
+                                           echo "Vendido";
+                                          }else if ($row['VerificarProducto'] == 1){
+                                            echo "verificado";
+                                          }else if($row['VerificarProducto'] == 0){
+                                            echo "Esperando verificación";
                                           }
                                            ?></td>
-                                          <td>
-                                              <a href="index.php?modulo=editarProducto&IdProducto=<?php echo $row['IdProducto'] ?>" style="margin-right: 5px;"> <i class="fas fa-edit"></i> </a>
-                                              <a href="index.php?modulo=productos&IdBorrar=<?php echo $row['IdProducto'] ?>" class="text-danger BorrarProducto"> <i class="fas fa-trash"></i> </a>
-                                          </td>             
+                                          <td><?php
+                                              if($row['Cantidad'] == 1){
+                                                ?><a href="index.php?modulo=editarProducto&IdProducto=<?php echo $row['IdProducto'] ?>" style="margin-right: 5px;"> <i class="fas fa-edit"></i> </a>
+                                                <a href="index.php?modulo=productos&IdBorrar=<?php echo $row['IdProducto'] ?>" class="text-danger BorrarProducto"> <i class="fas fa-trash"></i> </a>
+                                                <?php
+                                              }else{
+                                                ?><a href="" style="margin-right: 5px;">Enviar producto</a>
+                                                <?php
+                                              }                                              
+                                              ?></td>             
                                       </tr>
                                   <?php
                                     }
