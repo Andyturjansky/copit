@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-09-2020 a las 05:51:33
+-- Tiempo de generación: 30-09-2020 a las 19:18:42
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
@@ -70,7 +70,9 @@ INSERT INTO `clientes` (`IdCliente`, `NombreCliente`, `Email`, `Password`, `Tele
 (10, 'gael', 'gael@gmail.com', 'c625e435536824541608631f9775549b', '', '', '', 0),
 (13, 'Luca', 'luca@gmail.com', 'd388bf5b0de734b993b9511a05b9252a', '', '', '', 0),
 (21, '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '', '', 0),
-(22, 'asd', 'asd@gmail.com', '7815696ecbf1c96e6894b779456d330e', '', '', '', 0);
+(22, 'asd', 'asd@gmail.com', '7815696ecbf1c96e6894b779456d330e', '', '', '', 0),
+(23, 'aksa', 'asasa@gmail.com', '202cb962ac59075b964b07152d234b70', '', '', '', 0),
+(24, 'juan', 'juan@gmail.com', 'a31add0c8535719a165e2fad450c4cf6', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -116,21 +118,6 @@ INSERT INTO `condicion` (`IdCondicion`, `NombreCondicion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalleventas`
---
-
-CREATE TABLE `detalleventas` (
-  `IdDetalle` int(11) NOT NULL,
-  `IdDetalleProducto` int(11) NOT NULL,
-  `IdDetalleVenta` int(11) NOT NULL,
-  `DetalleCantidad` int(11) NOT NULL,
-  `DetallePrecio` float NOT NULL,
-  `SubTotal` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `diseniadores`
 --
 
@@ -170,22 +157,9 @@ CREATE TABLE `productos` (
   `Precio` float NOT NULL,
   `ImagenProducto` varchar(255) NOT NULL DEFAULT '',
   `VerificarProducto` tinyint(1) DEFAULT 0,
-  `IdDetalleCliente` int(11) NOT NULL
+  `IdDetalleCliente` int(11) NOT NULL,
+  `Cantidad` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `productos`
---
-
-INSERT INTO `productos` (`IdProducto`, `IdCategoriaProducto`, `Nombre`, `IdCondicionProducto`, `IdTalleProducto`, `IdDiseniadorProducto`, `IdColorProducto`, `DescripcionProducto`, `Precio`, `ImagenProducto`, `VerificarProducto`, `IdDetalleCliente`) VALUES
-(1, 2, 'Campera Supreme X The north face', 1, 2, 1, 2, 'Comprada en Supreme New York el dia de su lanzamiento.', 15000, 'Supreme-The-North-Face-Mountain-Parka.jpg', 1, 9),
-(2, 1, 'Nike Air Yeezy 2 Red October', 2, 1, 2, 1, 'Fueron usadas muy pocas veces, estan impecables.', 23000, 'nikeAirYeezy.jpg', 1, 9),
-(96, 4, 'Remera Off White', 1, 3, 5, 2, 'Remera sin uso de la coleecion 2019', 1000, 'OFF-WHITE-Flamed-Bart-T-Shirt-White.jpg', 1, 9),
-(97, 3, 'Buzo Astroworld Travis', 3, 4, 4, 3, 'Buzo con muy poco uso, comprado en el concierto de NY', 6000, 'Travis-Scott-Astrowolrd-Wish-You-Were-Here-Hoodie-Black.jpg', 1, 9),
-(98, 5, 'Billetera Gucci', 3, 1, 7, 3, 'Billetera gucci con diseño snake', 500, 'Gucci-Bifold-Wallet-GG-Supreme-Kingsnake-4-Card-Slots-Black-Studio-1.jpg', 1, 10),
-(99, 1, 'Balenciaga speed trainer', 1, 2, 3, 3, 'Balenciagas talle 9 US con caja y bolsa original.', 23000, 'speedTrainer.jpg', 1, 9),
-(100, 2, 'Campera adidas x bape', 2, 3, 6, 4, 'Campera bape x adidas camo', 12300, 'Bape-ABC-Camo-Track-Jacket-Green.jpg', 1, 9),
-(129, 2, 'campera nike x supreme', 3, 4, 1, 4, 'campera nike x supreme muy poco uso', 32000, 'Supreme-x-Nike-SS19-2.jpg', 1, 13);
 
 -- --------------------------------------------------------
 
@@ -227,7 +201,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`IdUsuario`, `Nombre`, `Email`, `Password`) VALUES
 (86, 'Admin', 'Admin@gmail.com', 'Admin123'),
-(87, 'Prueba admin', 'administrador@gmail.com', 'Admin');
+(89, 'juan', 'juan@gmail.com', 'Juan123');
 
 -- --------------------------------------------------------
 
@@ -237,8 +211,23 @@ INSERT INTO `usuarios` (`IdUsuario`, `Nombre`, `Email`, `Password`) VALUES
 
 CREATE TABLE `ventas` (
   `IdVenta` int(11) NOT NULL,
-  `IdDetalleCliente` int(11) NOT NULL,
-  `Fecha` datetime NOT NULL
+  `IdDetalleComprador` int(11) NOT NULL,
+  `IdDetalleVendedor` int(11) NOT NULL,
+  `Fecha` datetime NOT NULL,
+  `IdDetalleProducto` int(11) NOT NULL,
+  `DetalleNombre` varchar(250) NOT NULL,
+  `DetallePrecio` int(11) NOT NULL,
+  `VentaNombreDestinatario` varchar(250) NOT NULL,
+  `VentaCalle` varchar(250) NOT NULL,
+  `VentaNumeroCalle` int(11) NOT NULL,
+  `VentaDeptoNum` int(11) NOT NULL,
+  `VentaCodigoPostal` int(11) NOT NULL,
+  `VentaProvincia` varchar(250) NOT NULL,
+  `VentaCiudad` varchar(250) NOT NULL,
+  `VentaTelefono` varchar(250) NOT NULL,
+  `VentaIndicaciones` varchar(500) NOT NULL,
+  `DetalleEmailComprador` varchar(250) NOT NULL,
+  `DetalleEmailVendedor` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -269,14 +258,6 @@ ALTER TABLE `colores`
 --
 ALTER TABLE `condicion`
   ADD PRIMARY KEY (`IdCondicion`);
-
---
--- Indices de la tabla `detalleventas`
---
-ALTER TABLE `detalleventas`
-  ADD PRIMARY KEY (`IdDetalle`),
-  ADD KEY `fkIdProducto` (`IdDetalleProducto`),
-  ADD KEY `fkIdVenta` (`IdDetalleVenta`);
 
 --
 -- Indices de la tabla `diseniadores`
@@ -329,7 +310,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `colores`
@@ -344,12 +325,6 @@ ALTER TABLE `condicion`
   MODIFY `IdCondicion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `detalleventas`
---
-ALTER TABLE `detalleventas`
-  MODIFY `IdDetalle` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `diseniadores`
 --
 ALTER TABLE `diseniadores`
@@ -359,7 +334,7 @@ ALTER TABLE `diseniadores`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `IdProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `IdProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT de la tabla `talles`
@@ -371,24 +346,17 @@ ALTER TABLE `talles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `IdUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `IdUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `IdVenta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdVenta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `detalleventas`
---
-ALTER TABLE `detalleventas`
-  ADD CONSTRAINT `IdProducto` FOREIGN KEY (`IdDetalleProducto`) REFERENCES `productos` (`IdProducto`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `IdVenta` FOREIGN KEY (`IdDetalleVenta`) REFERENCES `ventas` (`IdVenta`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `productos`
